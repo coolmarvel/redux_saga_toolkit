@@ -1,0 +1,52 @@
+import axios from "axios";
+
+// READ API
+export const getData = async () => {
+  const response = await axios.get(`http://localhost:4000/data`);
+  return response.data;
+};
+
+// CREATE UPDATE API
+export async function postData(postData) {
+  console.log("postData", postData);
+  // UPDATE API
+  if (postData.data.id !== "" && postData.data.id !== null) {
+    const response = await axios.put(
+      `http://localhost:4000/data/` + postData.data.id, //data.json 의 id
+      {
+        id: postData.data.id,
+        blocks: parseInt(postData.data.blocks),
+        transactions: parseInt(postData.data.transactions),
+        // cpu: postData.data.cpu,
+        // memory: postData.data.memory,
+        // storage: postData.data.storage,
+        // blockchainInfo: postData.data.blockchainInfo,
+        // ledgerInfo: postData.data.ledgerInfo,
+        // resourceInfo: postData.data.resourceInfo,
+      }
+    );
+    return response;
+  }
+
+  // CREATE API
+  else {
+    const response = await axios.post(`http://localhost:4000/data`, {
+      id: postData.data.lastId + 1,
+      blocks: parseInt(postData.data.blocks),
+      transactions: parseInt(postData.data.transactions),
+      // cpu: postData.data.cpu,
+      // memory: postData.data.memory,
+      // storage: postData.data.storage,
+      // blockchainInfo: postData.data.blockchainInfo,
+      // ledgerInfo: postData.data.ledgerInfo,
+      // resourceInfo: postData.data.resourceInfo,
+    });
+    return response;
+  }
+}
+
+// DELETE API
+export async function removeData(id) {
+  const response = await axios.delete(`http://localhost:4000/data/` + id);
+  return response;
+}
