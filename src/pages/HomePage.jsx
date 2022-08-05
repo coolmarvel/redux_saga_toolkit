@@ -69,18 +69,31 @@ function HomePage() {
 
   const { dashboard, lastId } = useSelector((state) => state.boardReducer);
   // console.log("dashboard", dashboard);
+  // console.log("blocksArray", blocksArray);
 
   const blocksArray = [];
 
   for (const data of dashboard) {
-    blocksArray.push(data.blocks);
+    blocksArray.push(data);
   }
 
   const shuffle = (array) => {
-    return array.sort(() => Math.random() - 0.5);
+    return [...array].sort(() => Math.random() - 0.5);
   };
 
-  shuffle(blocksArray);
+  const shuffleArray = (array) => {
+    for (let loop = array.length - 1; loop >= 0; loop--) {
+      let randomNum = Math.floor(Math.random() * (loop + 1));
+      let randomArrayItem = array[randomNum];
+
+      array[randomNum] = array[loop];
+      array[loop] = randomArrayItem;
+    }
+    // 배열이 잘 섞였는지 확인하기 위함.
+    // console.log(array);
+  };
+
+  shuffleArray(blocksArray);
 
   useEffect(() => {
     setLoading(true);
@@ -130,8 +143,8 @@ function HomePage() {
               <td width="100">Blocks</td>
               <td width="100">Transactions</td>
             </tr>
-            {dashboard.length > 0 &&
-              dashboard.map((value, index) => (
+            {blocksArray.length > 0 &&
+              blocksArray.map((value, index) => (
                 <BoardList
                   key={index}
                   id={value.id}
@@ -164,14 +177,14 @@ function HomePage() {
       <br />
       <hr />
       <br />
-      <ECharts
+      {/* <ECharts
         option={options}
         opts={{ renderer: "svg", width: "auto", height: "350px" }}
       />
       <ECharts
         option={options1}
         opts={{ renderer: "svg", width: "auto", height: "350px" }}
-      />
+      /> */}
     </div>
   );
 }
