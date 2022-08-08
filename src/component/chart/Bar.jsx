@@ -59,9 +59,7 @@ export default class Bar extends React.Component {
         data: dataAxis,
         axisLabel: {
           inside: true,
-          textStyle: {
-            color: "#fff",
-          },
+          color: "#fff",
         },
         axisTick: {
           show: false,
@@ -79,9 +77,7 @@ export default class Bar extends React.Component {
           show: false,
         },
         axisLabel: {
-          textStyle: {
-            color: "#999",
-          },
+          color: "#999",
         },
       },
       dataZoom: [
@@ -94,7 +90,7 @@ export default class Bar extends React.Component {
           // For shadow
           type: "bar",
           itemStyle: {
-            normal: { color: "rgba(0,0,0,0.05)" },
+            color: "rgba(0,0,0,0.05)",
           },
           barGap: "-100%",
           barCategoryGap: "40%",
@@ -103,15 +99,13 @@ export default class Bar extends React.Component {
         },
         {
           type: "bar",
-          itemStyle: {
-            normal: {
-              color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#83bff6" },
-                { offset: 0.5, color: "#188df0" },
-                { offset: 1, color: "#188df0" },
-              ]),
-            },
-            emphasis: {
+          emphasis: {
+            color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.5, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+            itemStyle: {
               color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#2378f7" },
                 { offset: 0.7, color: "#2378f7" },
@@ -127,7 +121,7 @@ export default class Bar extends React.Component {
     // Enable data zoom when user click bar.
     var zoomSize = 6;
     this.chartBar.on("click", (params) => {
-      console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+      // console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
       this.chartBar.dispatchAction({
         type: "dataZoom",
         startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],

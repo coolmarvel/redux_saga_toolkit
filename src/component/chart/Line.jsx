@@ -48,7 +48,7 @@ export default class Line extends React.Component {
       },
       legend: {
         top: "bottom",
-        data: ["意向"],
+        data: [""],
       },
       tooltip: {
         triggerOn: "none",
@@ -129,24 +129,20 @@ export default class Line extends React.Component {
           symbolSize: 5,
           sampling: "average",
           itemStyle: {
-            normal: {
-              color: "#8ec6ad",
-            },
+            color: "#8ec6ad",
           },
           stack: "a",
           areaStyle: {
-            normal: {
-              color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "#8ec6ad",
-                },
-                {
-                  offset: 1,
-                  color: "#ffe",
-                },
-              ]),
-            },
+            color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: "#8ec6ad",
+              },
+              {
+                offset: 1,
+                color: "#ffe",
+              },
+            ]),
           },
           data: data,
         },
@@ -159,23 +155,19 @@ export default class Line extends React.Component {
           symbolSize: 5,
           sampling: "average",
           itemStyle: {
-            normal: {
-              color: "#d68262",
-            },
+            color: "#d68262",
           },
           areaStyle: {
-            normal: {
-              color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "#d68262",
-                },
-                {
-                  offset: 1,
-                  color: "#ffe",
-                },
-              ]),
-            },
+            color: new this.echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: "#d68262",
+              },
+              {
+                offset: 1,
+                color: "#ffe",
+              },
+            ]),
           },
           data: data2,
         },

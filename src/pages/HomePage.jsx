@@ -8,7 +8,7 @@ import {
   removeDataAsync,
 } from "../redux/actions/index";
 
-import ECharts, { EChartsReactProps } from "echarts-for-react";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -62,23 +62,18 @@ function HomePage() {
   for (const data of dashboard) {
     array.push(data.blocks);
   }
-  console.log("array", array);
 
-  useEffect(() => {
-    setData(array);
-  }, []);
+  // const shuffleArray = (array) => {
+  //   for (let loop = array.length - 1; loop >= 0; loop--) {
+  //     let randomNum = Math.floor(Math.random() * (loop + 1));
+  //     let randomArrayItem = array[randomNum];
 
-  const shuffleArray = (array) => {
-    for (let loop = array.length - 1; loop >= 0; loop--) {
-      let randomNum = Math.floor(Math.random() * (loop + 1));
-      let randomArrayItem = array[randomNum];
-
-      array[randomNum] = array[loop];
-      array[loop] = randomArrayItem;
-    }
-    // 배열이 잘 섞였는지 확인하기 위함.
-    // console.log(array);
-  };
+  //     array[randomNum] = array[loop];
+  //     array[loop] = randomArrayItem;
+  //   }
+  //   // 배열이 잘 섞였는지 확인하기 위함.
+  //   // console.log(array);
+  // };
 
   // shuffleArray();
 
@@ -88,53 +83,19 @@ function HomePage() {
     setLoading(false);
   }, []);
 
-  const [options, setOptions] = useState({
-    title: {
-      text: "Stacked Line",
-    },
-    tooltip: {
-      trigger: "axis",
-    },
-    legend: {
-      data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
-    },
-    grid: {
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: "category",
-      boundaryGap: false,
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    },
-    yAxis: {
-      type: "value",
-    },
-    series: [
-      {
-        name: "Email",
-        type: "line",
-        stack: "Total",
-        data: array,
-      },
-      // {
-      //   name: "Union Ads",
-      //   type: "line",
-      //   stack: "Total",
-      //   data: [220, 182, 191, 234, 290, 330, 310],
-      // },
-    ],
-  });
-
   return (
     <div>
+      <div>
+        <nav
+          style={{
+            borderBottom: "solid 1px",
+            paddingBottom: "1rem",
+          }}
+        >
+          <Link to="/echart">Chart Page</Link>
+        </nav>
+      </div>
+      <br />
       <button onClick={onSearchButtonClick}>조회</button>
       <div>
         <table border="1">
@@ -151,12 +112,6 @@ function HomePage() {
                   id={value.id}
                   blocks={value.blocks}
                   transactions={value.transactions}
-                  // cpu={value.cpu}
-                  // memory={value.memory}
-                  // storage={value.storage}
-                  // blockchainInfo={value.blockchainInfo}
-                  // ledgerInfo={value.ledgerInfo}
-                  // resourceInfo={value.resourceInfo}
                   onRowClick={onRowClick}
                   onRemoveButtonClick={onRemoveButtonClick}
                 />
@@ -178,7 +133,6 @@ function HomePage() {
       <br />
       <hr />
       <br />
-      <ECharts option={options} opts={{ renderer: "svg", height: "350px" }} />
     </div>
   );
 }

@@ -23,20 +23,19 @@ export default class Radar extends React.Component {
       tooltip: {},
       legend: {
         data: [
-          "budget allocation ( Allocated Budget )",
-          "actual expenditure ( Actual Spending )",
+          "Allocated Budget ( Allocated Budget )",
+          "Actual Spending ( Actual Spending )",
         ],
       },
       radar: {
         // shape: 'circle',
         name: {
-          textStyle: {
-            color: "#fff",
-            backgroundColor: "#999",
-            borderRadius: 3,
-            padding: [3, 5],
-          },
+          color: "#fff",
+          backgroundColor: "#999",
+          borderRadius: 3,
+          padding: [3, 5],
         },
+        // alignTicks: true,
         indicator: [
           { name: "Sales ( sales )", max: 6500 },
           { name: "Administration ( Administration )", max: 16000 },
@@ -53,7 +52,6 @@ export default class Radar extends React.Component {
         {
           name: "Budget vs spending ( Budget vs spending )",
           type: "radar",
-          // areaStyle: {normal: {}},
           data: [
             {
               value: [4300, 10000, 28000, 35000, 50000, 19000],
