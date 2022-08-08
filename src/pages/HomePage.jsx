@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import BoardList from "../component/BoardList";
-import BoardNew from "../component/BoardNew";
+import BoardList from "../component/board/BoardList";
+import BoardNew from "../component/board/BoardNew";
 import {
   searchDataAsync,
   saveDataAsync,
@@ -17,12 +17,6 @@ function HomePage() {
     id: "",
     blocks: "",
     transactions: "",
-    // cpu: "",
-    // memory: "",
-    // storage: "",
-    // blockchainInfo: "",
-    // ledgerInfo: "",
-    // resourceInfo: "",
   });
 
   const changeData = (e) => {
@@ -37,12 +31,6 @@ function HomePage() {
       id: "",
       blocks: "",
       transactions: "",
-      // cpu: "",
-      // memory: "",
-      // storage: "",
-      // blockchainInfo: "",
-      // ledgerInfo: "",
-      // resourceInfo: "",
     });
   };
 
@@ -68,18 +56,17 @@ function HomePage() {
   };
 
   const { dashboard, lastId } = useSelector((state) => state.boardReducer);
-  // console.log("dashboard", dashboard);
-  // console.log("blocksArray", blocksArray);
 
-  const blocksArray = [];
+  const array = [];
 
   for (const data of dashboard) {
-    blocksArray.push(data);
+    array.push(data.blocks);
   }
+  console.log("array", array);
 
-  const shuffle = (array) => {
-    return [...array].sort(() => Math.random() - 0.5);
-  };
+  useEffect(() => {
+    setData(array);
+  }, []);
 
   const shuffleArray = (array) => {
     for (let loop = array.length - 1; loop >= 0; loop--) {
@@ -93,7 +80,7 @@ function HomePage() {
     // console.log(array);
   };
 
-  shuffleArray(blocksArray);
+  // shuffleArray();
 
   useEffect(() => {
     setLoading(true);
@@ -102,33 +89,47 @@ function HomePage() {
   }, []);
 
   const [options, setOptions] = useState({
-    xAxis: {
-      type: "category",
-      data: ["우", "주", "멋", "쟁", "이", "성", "현"],
+    title: {
+      text: "Stacked Line",
     },
-    yAxis: {
-      type: "value",
+    tooltip: {
+      trigger: "axis",
     },
-    series: [
-      {
-        data: blocksArray,
-        type: "bar",
+    legend: {
+      data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {},
       },
-    ],
-  });
-  const [options1, setOptions1] = useState({
+    },
     xAxis: {
       type: "category",
-      data: ["우", "주", "멋", "쟁", "이", "성", "현"],
+      boundaryGap: false,
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: blocksArray,
+        name: "Email",
         type: "line",
+        stack: "Total",
+        data: array,
       },
+      // {
+      //   name: "Union Ads",
+      //   type: "line",
+      //   stack: "Total",
+      //   data: [220, 182, 191, 234, 290, 330, 310],
+      // },
     ],
   });
 
@@ -143,8 +144,8 @@ function HomePage() {
               <td width="100">Blocks</td>
               <td width="100">Transactions</td>
             </tr>
-            {blocksArray.length > 0 &&
-              blocksArray.map((value, index) => (
+            {dashboard.length > 0 &&
+              dashboard.map((value, index) => (
                 <BoardList
                   key={index}
                   id={value.id}
@@ -177,14 +178,7 @@ function HomePage() {
       <br />
       <hr />
       <br />
-      {/* <ECharts
-        option={options}
-        opts={{ renderer: "svg", width: "auto", height: "350px" }}
-      />
-      <ECharts
-        option={options1}
-        opts={{ renderer: "svg", width: "auto", height: "350px" }}
-      /> */}
+      <ECharts option={options} opts={{ renderer: "svg", height: "350px" }} />
     </div>
   );
 }
