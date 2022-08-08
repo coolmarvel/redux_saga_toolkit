@@ -1,11 +1,17 @@
 import React from "react";
 import HomePage from "./pages/HomePage";
+import ChartPage from "./pages/ChartPage";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <HomePage />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/echarts" element={<ChartPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
