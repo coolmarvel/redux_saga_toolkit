@@ -16,7 +16,7 @@ function BoardNew({ changeData, data, onSaveButtonClick, resetForm }) {
             type="text"
             name="blocks"
             onChange={changeData}
-            value={data.blocks}
+            value={data.blocks || ""}
           />
         </div>
         <div>
@@ -25,10 +25,15 @@ function BoardNew({ changeData, data, onSaveButtonClick, resetForm }) {
             type="text"
             name="transactions"
             onChange={changeData}
-            value={data.transactions}
+            value={data.transactions || ""}
           />
         </div>
-        <input type="hidden" name="id" onChange={changeData} value={data.id} />
+        <input
+          type="hidden"
+          name="id"
+          onChange={changeData}
+          value={data.id || ""}
+        />
         <button type="submit">저장</button>
       </form>
     </div>
