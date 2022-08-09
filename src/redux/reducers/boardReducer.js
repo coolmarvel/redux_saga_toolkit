@@ -1,16 +1,37 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit"; // immer가 내장되어있어 불변성을 유지해준다.
+import { createAction } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
-import createRequestSaga from "../sagas/createRequestSaga";
-import * as API from "../../api/api";
-import {
-  SEARCH_DATA,
+import createRequestSaga, {
+  createRequestActionTypes,
+} from "../sagas/createRequestSaga";
+import * as API from "../../api/boardReducerAPI";
+
+// ACTION TYPE
+export const SEARCH_DATA = "SEARCH_DATA";
+export const [
   SEARCH_DATA_ASYNC,
   SEARCH_DATA_ASYNC_SUCCESS,
   SEARCH_DATA_ASYNC_FAILURE,
+] = createRequestActionTypes("SEARCH_DATA_ASYNC");
+export const [
   SAVE_DATA_ASYNC,
+  SAVE_DATA_ASYNC_SUCCESS,
+  SAVE_DATA_ASYNC_FAILURE,
+] = "SAVE_DATA_ASYNC";
+export const [
   REMOVE_DATA_ASYNC,
-  searchDataAsync,
-} from "../actions/index";
+  REMOVE_DATA_ASYNC_SUCCESS,
+  REMOVE_DATA_ASYNC_FAILURE,
+] = "REMOVE_DATA_ASYNC";
+
+// ACTION CREATOR
+export const removeDataAsync = createAction(REMOVE_DATA_ASYNC);
+export const searchData = createAction(SEARCH_DATA);
+export const searchDataAsync = createAction(SEARCH_DATA_ASYNC, (data) => data);
+export const saveDataAsync = createAction(SAVE_DATA_ASYNC, (data, lastId) => ({
+  data,
+  lastId,
+}));
 
 // INITIAL STATE
 const initialState = {
@@ -19,9 +40,15 @@ const initialState = {
 };
 
 // Saga Create
-const searchDataSaga = createRequestSaga(SEARCH_DATA_ASYNC, API.getData);
+// const searchDataSaga = createRequestSaga(SEARCH_DATA_ASYNC, API.getData);
 // const saveDataSaga = createRequestSaga(SAVE_DATA_ASYNC, API.postData);
 // const removeDataSaga = createRequestSaga(REMOVE_DATA_ASYNC, API.removeData);
+
+// Search Saga
+export function* searchDataSaga() {
+  const response = yield call(API.getData);
+  yield put(searchData(response));
+}
 
 // Save Saga
 export function* saveDataSaga({ payload }) {
@@ -55,12 +82,6 @@ export default createReducer(initialState, {
         id: data[i].id,
         blocks: data[i].blocks,
         transactions: data[i].transactions,
-        // cpu: data[i].cpu,
-        // memory: data[i].memory,
-        // storage: data[i].storage,
-        // blockchainInfo: data[i].blockchainInfo,
-        // ledgerInfo: data[i].ledgerInfo,
-        // resourceInfo: data[i].resourceInfo,
       });
       if (i === data.length - 1) {
         state.lastId = data[i].id;
@@ -74,12 +95,6 @@ export default createReducer(initialState, {
         id: data[i].id,
         blocks: data[i].blocks,
         transactions: data[i].transactions,
-        // cpu: data[i].cpu,
-        // memory: data[i].memory,
-        // storage: data[i].storage,
-        // blockchainInfo: data[i].blockchainInfo,
-        // ledgerInfo: data[i].ledgerInfo,
-        // resourceInfo: data[i].resourceInfo,
       });
       if (i === data.length - 1) {
         state.lastId = data[i].id;

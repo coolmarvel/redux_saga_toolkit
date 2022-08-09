@@ -6,7 +6,7 @@ import {
   searchDataAsync,
   saveDataAsync,
   removeDataAsync,
-} from "../redux/actions/index";
+} from "../redux/reducers/boardReducer";
 
 import { Link } from "react-router-dom";
 

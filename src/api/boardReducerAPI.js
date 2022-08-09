@@ -17,12 +17,6 @@ export async function postData(postData) {
         id: postData.data.id,
         blocks: parseInt(postData.data.blocks),
         transactions: parseInt(postData.data.transactions),
-        // cpu: postData.data.cpu,
-        // memory: postData.data.memory,
-        // storage: postData.data.storage,
-        // blockchainInfo: postData.data.blockchainInfo,
-        // ledgerInfo: postData.data.ledgerInfo,
-        // resourceInfo: postData.data.resourceInfo,
       }
     );
     return response;
@@ -34,12 +28,6 @@ export async function postData(postData) {
       id: postData.data.lastId + 1,
       blocks: parseInt(postData.data.blocks),
       transactions: parseInt(postData.data.transactions),
-      // cpu: postData.data.cpu,
-      // memory: postData.data.memory,
-      // storage: postData.data.storage,
-      // blockchainInfo: postData.data.blockchainInfo,
-      // ledgerInfo: postData.data.ledgerInfo,
-      // resourceInfo: postData.data.resourceInfo,
     });
     return response;
   }
