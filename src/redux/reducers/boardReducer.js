@@ -1,5 +1,5 @@
-import { createReducer } from "@reduxjs/toolkit"; // immer가 내장되어있어 불변성을 유지해준다.
-import { createAction } from "redux-actions";
+import { createReducer, createAction } from "@reduxjs/toolkit"; // immer가 내장되어있어 불변성을 유지해준다.
+// import { createAction } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import createRequestSaga, {
   createRequestActionTypes,
@@ -27,11 +27,18 @@ export const [
 // ACTION CREATOR
 export const removeDataAsync = createAction(REMOVE_DATA_ASYNC);
 export const searchData = createAction(SEARCH_DATA);
-export const searchDataAsync = createAction(SEARCH_DATA_ASYNC, (data) => data);
+export const searchDataAsync = createAction(SEARCH_DATA_ASYNC);
 export const saveDataAsync = createAction(SAVE_DATA_ASYNC, (data, lastId) => ({
-  data,
-  lastId,
+  payload: {
+    data,
+    lastId,
+  },
 }));
+// export const searchDataAsync = createAction(SEARCH_DATA_ASYNC, (data) => data);
+// export const saveDataAsync = createAction(SAVE_DATA_ASYNC, (data, lastId) => ({
+//   data,
+//   lastId,
+// }));
 
 // INITIAL STATE
 const initialState = {
